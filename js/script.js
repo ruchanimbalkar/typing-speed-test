@@ -15,13 +15,21 @@ const hardButton = document.querySelector(".hardBtn");
 //start button
 const startButton = document.querySelector(".startBtn");
 //time
-let seconds = 1;
+let seconds = 0;
 let timer = null;
+
+//input typed by user
+const input  =  document.getElementById("userInput");
+
+//wpm
+const wpmResult = document.querySelector(".wpm");
 
 const timeDisplay = document.getElementById("time");
 //formDiv
 const formDiv = document.querySelector(".formDiv");
 const handleStartBtnClick = () => {
+  //reset seconds
+  seconds = 0;
   //set textarea of form visible
   formDiv.style.visibility = "visible";
    //set content if not set already
@@ -31,24 +39,40 @@ const handleStartBtnClick = () => {
     //set text
     paraToType.textContent =  data.easy[0].text;
     console.log(paraToType);
-    textDiv.appendChild(paraToType); 
-    startTimer();
+    textDiv.appendChild(paraToType);   
    }
-
+    //start timer
+    startTimer();
 }
 
+
+function calculateResult() {
+  const numberOfWords = input.value.split(" ").length;
+  const wordsPerMinute = (numberOfWords * 60 )/ 60;
+  wpmResult.textContent = wordsPerMinute;
+ 
+}
+
+//update time in real time
 //Reference : https://youtu.be/0JQASwPuNB0?si=b10lxviyPTfVueap
 function updateDisplay () {
+  console.log("Inside update display : ", seconds);
  timeDisplay.textContent = seconds;
 }
 
 function startTimer () {
+  console.log("Inside start timer : ");
   if(timer === null){
-    timer = setInterval(()=>{
-      seconds++;
-      updateDisplay();
-    },1000)//1s
-  }
+    timer = setInterval(() => {
+    seconds++; // Decrease by 1 every second
+    updateDisplay();
+    if(seconds >= 60){
+      clearInterval(timer);
+      timer = null;
+      calculateResult();
+    }
+  },1000);
+}
 }
 
 startButton.addEventListener("click", handleStartBtnClick);
