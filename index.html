@@ -33,11 +33,11 @@
           <!-- Accuracy -->
           Accuracy: <span class="accuracy"> 94% </span> |
           <!-- Time -->
-          Time: <span class="time"> 0:46 </span>
+          Time: <span id="time"> 0 </span>
         </p>
       </div>
       <div>
-        <form>
+        <div class="menuDiv">
           <label>
             Difficulty:
             <button class="easyBtn">Easy</button>
@@ -51,7 +51,14 @@
           </label>
           <!-- Passage To Type-->
           <div class="textToType"></div>
-        </form>
+        </div>
+        <button class="startBtn">start</button>
+        <div class="formDiv">
+          <form>
+            <textarea id="userInput" name="userInput" rows="10" cols="33">
+            </textarea>
+          </form>
+        </div>
       </div>
     </main>
 
