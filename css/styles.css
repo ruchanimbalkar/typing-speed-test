@@ -1,8 +1,67 @@
+/* Reference : https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face*/
+/* 1. Regular Font Face */
+@font-face {
+  font-family: "Sora";
+  src: local("Sora Regular"), local("Sora-Regular"),
+    url("../fonts/Sora/static/Sora-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* 2. SemiBold Font Face */
+@font-face {
+  font-family: "Sora";
+  src: local("Sora SemiBold"), local("Sora-SemiBold"),
+    url("../fonts/Sora/static/Sora-SemiBold.ttf") format("truetype"); /* Change format if the file is actually a .woff2 */
+  font-weight: 600;
+  font-style: normal;
+}
+
+/* 3. Bold Font Face */
+@font-face {
+  font-family: "Sora";
+  src: local("Sora Bold"), local("Sora-Bold"),
+    url("../fonts/Sora/static/Sora-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
 body {
   background-color: black;
   color: gray;
+  font-family: "Sora";
 }
 
+header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.personalbest {
+  display: flex;
+  align-self: flex-end;
+}
+
+.personalbestspan,
+.wpm {
+  color: white;
+}
+
+.accuracy {
+  color: tomato;
+}
+
+.time {
+  color: yellow;
+}
+
+button {
+  background-color: transparent;
+  color: white;
+}
 .attribution {
   font-size: 0.6875rem;
   text-align: center;

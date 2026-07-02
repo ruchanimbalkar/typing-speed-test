@@ -18,19 +18,42 @@
   <body>
     <header>
       <img src="images/logo-large.svg" alt="Typing test logo" />
+      <!-- PB -->
+      <div class="personalbest">
+        <img src="images/icon-personal-best.svg" alt="trpophy icon" />
+        <p>Personal best : <span class="personalbestspan"> 92 WPM </span></p>
+      </div>
     </header>
-    Personal best:
-    <!-- PB -->
-    WPM WPM:
-    <!-- WPM -->
-    Accuracy:
-    <!-- Accuracy -->
-    Time:
-    <!-- Time -->
 
-    Difficulty: Easy Medium Hard Mode: Timed (60s) Passage
-
-    <!-- Passage -->
+    <main>
+      <div>
+        <p>
+          <!-- WPM -->
+          WPM <span class="wpm"> 40 </span> |
+          <!-- Accuracy -->
+          Accuracy: <span class="accuracy"> 94% </span> |
+          <!-- Time -->
+          Time: <span class="time"> 0:46 </span>
+        </p>
+      </div>
+      <div>
+        <form>
+          <label>
+            Difficulty:
+            <button class="easyBtn">Easy</button>
+            <button class="medBtn">Medium</button>
+            <button class="hardBtn">Hard</button>
+          </label>
+          <label>
+            Mode:
+            <button>Timed (60s)</button>
+            <button>Passage</button>
+          </label>
+          <!-- Passage To Type-->
+          <div class="textToType"></div>
+        </form>
+      </div>
+    </main>
 
     Start Typing Test Or click the text and start typing
 
@@ -52,5 +75,6 @@
       <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
       Coded by <a href="#">Rucha Nimbalkar</a>.
     </footer>
+    <script src="./js/script.js" type="module"></script>
   </body>
 </html>
