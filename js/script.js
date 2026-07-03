@@ -33,12 +33,12 @@ const goAgainBtn = document.querySelector(".goAgainBtn");
 //hide go Again button
 goAgainBtn.style.display="none";
 
+//timed button
+const timedBtn = document.querySelector(".timeLimit");
+//passage button
+const passageBtn = document.querySelector(".passage");
 //start button
 const startButton = document.querySelector(".startBtn");
-//time
-let seconds = 0;
-let timer = null;
-
 //input typed by user
 const input  =  document.getElementById("userInput");
 
@@ -49,38 +49,45 @@ const timeDisplay = document.getElementById("time");
 //formDiv
 const formDiv = document.querySelector(".formDiv");
 
-const clearResultDiv = () =>{
-  //Remove previous child/children
-  //Reference : https://www.w3schools.com/jsref/met_node_removechild.asp
-  while (resultDiv.hasChildNodes()) {
-      resultDiv.removeChild(resultDiv.firstChild);
-  }
-}
-const handleStartBtnClick = () => {
-  //reset seconds
-  seconds = 0;
-  //clear resultDiv
-  clearResultDiv();
-  //set textarea of form visible
-  formDiv.style.visibility = "visible";
-   //set content if not set already
-   if(!textDiv.hasChildNodes()){
-    //create paragraph element
-    const paraToType = document.createElement("p");
-    //set text
-    paraToType.textContent =  data.easy[0].text;
-    console.log(paraToType);
-    textDiv.appendChild(paraToType);   
-   }
-   //hide start button
-   startButton.style.display = "none";
-   //clear textarea 
-   //Reference : https://forum.freecodecamp.org/t/cant-clear-text-from-textarea-after-button-click/514410/3
-   input.value = "";
-    //start timer
-    startTimer();
+
+let seconds, timer, timeSet;
+
+
+//If user does a timed typing test:
+function handleTimedTest(){
+  //set seconds to zero
+   seconds = 0;
+   //set timer to null
+   timer = null;
+   //test is timed
+   timeSet = true;
+   //disable timed button
+   timedBtn.disabled = true;
+  //hide passage button
+  passageBtn.style.display = "none";
 }
 
+timedBtn.addEventListener("click", handleTimedTest);
+
+function handlePassagePreference(){
+  //set timeSet to false because test is not timed
+  timeSet = false;
+  //disable passage button
+  passageBtn.disabled = true;
+  //hide timed button
+  timedBtn.style.display = "none";
+}
+
+passageBtn.addEventListener("click", handlePassagePreference)
+
+//clear result div content for new test function
+const clearResultDiv = () =>{
+    //Remove previous child/children
+    //Reference : https://www.w3schools.com/jsref/met_node_removechild.asp
+    while (resultDiv.hasChildNodes()) {
+        resultDiv.removeChild(resultDiv.firstChild);
+    }
+}
 
 //Reference : https://youtu.be/liNltrT-ULg?si=WcyPn1t3HpkXOFz-
 function calculateResult() {
@@ -104,32 +111,63 @@ function calculateResult() {
   goAgainBtn.style.display="block";
 }
 
+const handleStartBtnClick = () => {
+  //reset seconds
+  seconds = 0;
+  //clear resultDiv
+  clearResultDiv();
+  //set textarea of form visible
+  formDiv.style.visibility = "visible";
+  //set content if not set already
+  if(!textDiv.hasChildNodes()){
+    //create paragraph element
+    const paraToType = document.createElement("p");
+    //set text
+    paraToType.textContent =  data.easy[0].text;
+    console.log(paraToType);
+    textDiv.appendChild(paraToType);   
+  }
+  //hide start button
+  startButton.style.display = "none";
+  //clear textarea 
+  //Reference : https://forum.freecodecamp.org/t/cant-clear-text-from-textarea-after-button-click/514410/3
+  input.value = "";
+    //start timer if test is timed
+    if(timeSet === true){
+        startTimer();
+    } else{
+      //only calculate result and show result div once the user completes the test
+         input.addEventListener("change",calculateResult); //focus lost from textarea user is done typing!
+    }  
+}
+
+
 //update time in real time
 //Reference : https://youtu.be/0JQASwPuNB0?si=b10lxviyPTfVueap
 function updateDisplay () {
   console.log("Inside update display : ", seconds);
- timeDisplay.textContent = seconds;
+timeDisplay.textContent = seconds;
 }
 
 function startTimer () {
-  console.log("Inside start timer : ");
-  if(timer === null){
-    timer = setInterval(() => {
-    seconds++; // Decrease by 1 every second
-    updateDisplay();
-    if(seconds >= 60){
-      clearInterval(timer);
-      timer = null;
-      calculateResult();
+      console.log("Inside start timer : ");
+      if(timer === null){
+        timer = setInterval(() => {
+        seconds++; // Decrease by 1 every second
+        updateDisplay();
+        if(seconds >= 60){
+          clearInterval(timer);
+          timer = null;
+          calculateResult();
+        }
+      },1000);
     }
-  },1000);
-}
 }
 
 startButton.addEventListener("click", handleStartBtnClick);
 
-//For later if user changes difficulty level
-const dataItems =  Object.entries(data);
+  //For later if user changes difficulty level
+  const dataItems =  Object.entries(data);
 
 //Reference : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function getRandomInt(max) {
@@ -137,35 +175,34 @@ function getRandomInt(max) {
 }
 
 const handleEasyClick = () => {
-   //show start button if it is hidden
-   if(startButton.style.display === "none"){
-    startButton.style.display = "block";
-   }
-    //Remove previous child/children
-    while (textDiv.hasChildNodes()) {
-      textDiv.removeChild(textDiv.firstChild);
+    //show start button if it is hidden
+    if(startButton.style.display === "none"){
+      startButton.style.display = "block";
     }
-    //Remove styles for other two buttons
-    hardButton.style.color = "white";
-    hardButton.style.borderColor = "gray";
-    medButton.style.color = "white";
-    medButton.style.borderColor = "gray";
-    //set styles for button text and border
-    easyButton.style.color= "blue";
-    easyButton.style.borderColor="blue";
-    //generate random integer between 0 to 10.
-    const randomIndex = getRandomInt(10)
-    //print on console
-    console.log("random index", randomIndex);
-    //set content to text at the random index in easy array of objects
-    //create paragraph element
-    const paraToType = document.createElement("p");
-    //set text
-    paraToType.textContent =  data.easy[randomIndex].text;
-    console.log(paraToType);
-    textDiv.appendChild(paraToType);   
+      //Remove previous child/children
+      while (textDiv.hasChildNodes()) {
+        textDiv.removeChild(textDiv.firstChild);
+      }
+      //Remove styles for other two buttons
+      hardButton.style.color = "white";
+      hardButton.style.borderColor = "gray";
+      medButton.style.color = "white";
+      medButton.style.borderColor = "gray";
+      //set styles for button text and border
+      easyButton.style.color= "blue";
+      easyButton.style.borderColor="blue";
+      //generate random integer between 0 to 10.
+      const randomIndex = getRandomInt(10)
+      //print on console
+      console.log("random index", randomIndex);
+      //set content to text at the random index in easy array of objects
+      //create paragraph element
+      const paraToType = document.createElement("p");
+      //set text
+      paraToType.textContent =  data.easy[randomIndex].text;
+      console.log(paraToType);
+      textDiv.appendChild(paraToType);   
 }
-
 
 easyButton.addEventListener("click", handleEasyClick);
 
@@ -238,16 +275,22 @@ const handleHardClick = () => {
 hardButton.addEventListener("click", handleHardClick);
 
 
+
+
+
 //Go again Button
 function handleGoAgain(){
   //clear result div
   clearResultDiv();
   //show start button
   startButton.style.display="block";
-  //set seconds to zero
-  seconds=0;
-  //set timer to null
-  timer=null;
+  //if previous test was timed, then when user clicks go again button, the next test will also be timed
+  if(timeSet === true){
+    handleTimedTest();
+  }else{
+    //if previous test was not timed and user prefers passage, then next test will also be passage
+    handlePassagePreference();
+  }
   //enable text area
   //Reference : https://www.w3schools.com/Jsref/prop_textarea_disabled.asp
   input.disabled = false;
