@@ -6,7 +6,12 @@ const prevBestWPM = localStorage.getItem("bestWPM");
 
 //set personal best to previous score next to trophy icon
 const prevBest = document.querySelector(".personalbestspan");
-prevBest.textContent = `${prevBestWPM} WPM`;
+if(prevBestWPM != null){
+  prevBest.textContent = `${prevBestWPM} WPM`;
+} else{
+   prevBest.textContent = "0 WPM";
+}
+
 
 //Get textToType div
 const textDiv = document.querySelector(".textToType");
