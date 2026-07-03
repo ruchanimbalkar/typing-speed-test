@@ -33,6 +33,11 @@ const goAgainBtn = document.querySelector(".goAgainBtn");
 //hide go Again button
 goAgainBtn.style.display="none";
 
+//resetBtn
+const resetBtn = document.querySelector(".resetBtn");
+//hide reset button
+resetBtn.style.display="none";
+
 //timed button
 const timedBtn = document.querySelector(".timeLimit");
 //passage button
@@ -51,6 +56,9 @@ const formDiv = document.querySelector(".formDiv");
 
 
 let seconds, timer, timeSet;
+
+//difficulty level
+let level;
 
 
 //If user does a timed typing test:
@@ -76,6 +84,8 @@ function handlePassagePreference(){
   passageBtn.disabled = true;
   //hide timed button
   timedBtn.style.display = "none";
+  //set time to N/A because the test is not timed
+  timeDisplay.textContent = "N/A";
 }
 
 passageBtn.addEventListener("click", handlePassagePreference)
@@ -97,7 +107,7 @@ function calculateResult() {
   input.disabled = true;
   //create paragraph element for result div
   const resultPara = document.createElement("p");
-  const resultStr= `Test Complete! Solid run. Keep pushing to beat your high score. WPM:${wordsPerMinute}`;
+  const resultStr= `Test Complete! Solid run. Keep pushing to beat your high score. Difficuley level : ${level} | WPM:${wordsPerMinute}`;
   //set text
   resultPara.textContent =  resultStr;
   resultDiv.appendChild(resultPara);  
@@ -109,6 +119,15 @@ function calculateResult() {
   }
   //show go again button
   goAgainBtn.style.display="block";
+  //show reset button
+  resetBtn.style.display = "block";
+  //hide difficulty level buttons
+  easyButton.style.visibility = "hidden";
+  medButton.style.visibility = "hidden";
+  hardButton.style.visibility = "hidden";
+  //disable passage and timed button
+  timedBtn.disabled = true;
+  passageBtn.disabled = true;
 }
 
 const handleStartBtnClick = () => {
@@ -175,6 +194,8 @@ function getRandomInt(max) {
 }
 
 const handleEasyClick = () => {
+     //set diffculty level
+    level="easy";
     //show start button if it is hidden
     if(startButton.style.display === "none"){
       startButton.style.display = "block";
@@ -208,7 +229,9 @@ easyButton.addEventListener("click", handleEasyClick);
 
 // Handle medium difficulty level  button click
 const handleMediumClick = () => {
-      //show start button if it is hidden
+     //set diffculty level
+    level="medium";
+    //show start button if it is hidden
    if(startButton.style.display === "none"){
     startButton.style.display = "block";
    }
@@ -242,6 +265,8 @@ medButton.addEventListener("click", handleMediumClick);
 
 // Handle hard difficulty level  button click
 const handleHardClick = () => {
+    //set diffculty level
+   level="hard";
     //show start button if it is hidden
    if(startButton.style.display === "none"){
     startButton.style.display = "block";
@@ -275,9 +300,6 @@ const handleHardClick = () => {
 hardButton.addEventListener("click", handleHardClick);
 
 
-
-
-
 //Go again Button
 function handleGoAgain(){
   //clear result div
@@ -299,6 +321,37 @@ function handleGoAgain(){
   formDiv.style.visibility="hidden";
   //hide go again button
   goAgainBtn.style.display="none";
+ //show difficulty level buttons
+  easyButton.style.visibility = "visible";
+  medButton.style.visibility = "visible";
+  hardButton.style.visibility = "visible";
+  //show reset button
+  resetBtn.style.display = "block";
 }
 
 goAgainBtn.addEventListener("click", handleGoAgain);
+
+function handleResetClick(){
+  //show difficulty level buttons
+  easyButton.style.visibility = "visible";
+  medButton.style.visibility = "visible";
+  hardButton.style.visibility = "visible";
+  //enable text area
+  input.disabled = false;
+  input.value="";
+  //hide form div
+  formDiv.style.visibility="hidden";
+  //hide go again button
+  goAgainBtn.style.display="none";
+  //hide reset button
+  resetBtn.style.display = "none";
+   //clear result div
+  clearResultDiv();
+  //show start button
+  startButton.style.display="block";
+  //enable passage and timed button
+  timedBtn.disabled = false;
+  passageBtn.disabled = false;
+}
+
+resetBtn.addEventListener("click", handleResetClick)
