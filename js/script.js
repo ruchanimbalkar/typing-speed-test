@@ -14,6 +14,10 @@ const textDiv = document.querySelector(".textToType");
 //Get resultDiv
 const resultDiv = document.querySelector(".resultDiv");
 
+//confetti image
+const confettiImg = document.createElement("img");
+confettiImg.src="images/pattern-confetti.svg";
+
 //Store buttons of all levels
 const easyButton = document.querySelector(".easyBtn");
 const medButton = document.querySelector(".medBtn");
@@ -42,6 +46,7 @@ const formDiv = document.querySelector(".formDiv");
 
 const clearResultDiv = () =>{
   //Remove previous child/children
+  //Reference : https://www.w3schools.com/jsref/met_node_removechild.asp
   while (resultDiv.hasChildNodes()) {
       resultDiv.removeChild(resultDiv.firstChild);
   }
@@ -88,6 +93,7 @@ function calculateResult() {
   if(prevBestWPM <  wordsPerMinute){
     //set the current score as personal best in local storage
     localStorage.setItem("bestWPM", wordsPerMinute);
+    resultDiv.appendChild(confettiImg);
   }
   //show go again button
   goAgainBtn.style.display="block";
@@ -238,6 +244,7 @@ function handleGoAgain(){
   //set timer to null
   timer=null;
   //enable text area
+  //Reference : https://www.w3schools.com/Jsref/prop_textarea_disabled.asp
   input.disabled = false;
   input.value="";
   //hide form div
