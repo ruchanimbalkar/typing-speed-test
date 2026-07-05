@@ -155,6 +155,7 @@ const handleStartBtnClick = () => {
   if(timeSet === true){
       startTimer();
   } else{
+    console.log("inside else even though timeSet is true")
     //only calculate result and show result div once the user completes the test
     input.addEventListener("change",calculateResult); //focus lost from textarea user is done typing!
   }  
