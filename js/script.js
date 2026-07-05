@@ -83,7 +83,7 @@ function handlePassagePreference(){
   //disable passage button
   passageBtn.disabled = true;
   //hide timed button
-  timedBtn.style.display = "none";
+  timedBtn.style.visibility = "hidden";
   //set time to N/A because the test is not timed
   timeDisplay.textContent = "N/A";
 }
@@ -152,12 +152,12 @@ const handleStartBtnClick = () => {
   //Reference : https://forum.freecodecamp.org/t/cant-clear-text-from-textarea-after-button-click/514410/3
   input.value = "";
     //start timer if test is timed
-    if(timeSet === true){
-        startTimer();
-    } else{
-      //only calculate result and show result div once the user completes the test
-         input.addEventListener("change",calculateResult); //focus lost from textarea user is done typing!
-    }  
+  if(timeSet === true){
+      startTimer();
+  } else{
+    //only calculate result and show result div once the user completes the test
+    input.addEventListener("change",calculateResult); //focus lost from textarea user is done typing!
+  }  
 }
 
 
@@ -165,7 +165,7 @@ const handleStartBtnClick = () => {
 //Reference : https://youtu.be/0JQASwPuNB0?si=b10lxviyPTfVueap
 function updateDisplay () {
   console.log("Inside update display : ", seconds);
-timeDisplay.textContent = seconds;
+  timeDisplay.textContent = seconds;
 }
 
 function startTimer () {
@@ -352,6 +352,10 @@ function handleResetClick(){
   //enable passage and timed button
   timedBtn.disabled = false;
   passageBtn.disabled = false;
+  //show passage button
+  passageBtn.style.visibility = "visible";
+  //show timed button
+  timedBtn.style.visibility = "visible";
 }
 
 resetBtn.addEventListener("click", handleResetClick)
