@@ -181,7 +181,7 @@ function startTimer () {
       console.log("Inside start timer : ");
       if(timer === null){
         timer = setInterval(() => {
-        seconds++; // Decrease by 1 every second
+        seconds++; // Increase by 1 every second
         updateDisplay();
         if(seconds >= 60){
           clearInterval(timer);
