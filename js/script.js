@@ -137,7 +137,7 @@ const handleStartBtnClick = () => {
   clearResultDiv();
   //set textarea of form visible
   formDiv.style.visibility = "visible";
-  //set content if not set already
+  //set content to type if not set already
   if(!textDiv.hasChildNodes()){
     //create paragraph element
     const paraToType = document.createElement("p");
@@ -148,10 +148,10 @@ const handleStartBtnClick = () => {
   }
   //hide start button
   startButton.style.display = "none";
-  //clear textarea 
+  //clear textarea (for previously typed text)
   //Reference : https://forum.freecodecamp.org/t/cant-clear-text-from-textarea-after-button-click/514410/3
   input.value = "";
-    //start timer if test is timed
+  //start timer if test is timed
   if(timeSet === true){
       startTimer();
   } else{
@@ -169,6 +169,14 @@ function updateDisplay () {
   timeDisplay.textContent = seconds;
 }
 
+/**
+ * This function startTimer starts the timer for 60 seconds and after
+ * the 60 seconds limit is reached: 
+ * 1.  it clears the interval and sets 'timer' variable to null.
+ * 2. It calls the calculateResult() function which sets the resultDiv content.
+ * 
+ * @returns void/nothing
+ */
 function startTimer () {
       console.log("Inside start timer : ");
       if(timer === null){
@@ -194,6 +202,10 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+/***
+ * Handler function handles easy level difficulty button click event
+ * 
+ */
 const handleEasyClick = () => {
      //set diffculty level
     level="easy";
@@ -228,7 +240,10 @@ const handleEasyClick = () => {
 
 easyButton.addEventListener("click", handleEasyClick);
 
-// Handle medium difficulty level  button click
+/***
+ * Handler function handles medium level difficulty button click event
+ * 
+ */
 const handleMediumClick = () => {
      //set diffculty level
     level="medium";
@@ -264,7 +279,10 @@ const handleMediumClick = () => {
 
 medButton.addEventListener("click", handleMediumClick);
 
-// Handle hard difficulty level  button click
+/***
+ * Handler function handles hard level difficulty button click event
+ * 
+ */
 const handleHardClick = () => {
     //set diffculty level
    level="hard";
@@ -301,7 +319,10 @@ const handleHardClick = () => {
 hardButton.addEventListener("click", handleHardClick);
 
 
-//Go again Button
+/***
+ * Handler function handles GoAgain button click event
+ * 
+ */
 function handleGoAgain(){
   //clear result div
   clearResultDiv();
