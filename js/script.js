@@ -54,7 +54,7 @@ const timeDisplay = document.getElementById("time");
 //formDiv
 const formDiv = document.querySelector(".formDiv");
 
-
+//variables for seconds, timer and timeSet option boolean
 let seconds, timer, timeSet;
 
 //difficulty level
@@ -135,7 +135,7 @@ const handleStartBtnClick = () => {
   seconds = 0;
   //clear resultDiv
   clearResultDiv();
-  //set textarea of form visible
+  //set formDiv visible
   formDiv.style.visibility = "visible";
   //set content to type if not set already
   if(!textDiv.hasChildNodes()){
